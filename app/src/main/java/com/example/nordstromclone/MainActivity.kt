@@ -1,34 +1,29 @@
 package com.example.nordstromclone
 
 
-import android.media.Image
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Center
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.nordstromclone.ui.theme.NordstromCloneTheme
 
 class MainActivity : ComponentActivity() {
@@ -151,7 +146,7 @@ data class CarouselCard(
 )
 
 val CarouselSlides: List<CarouselCard> = listOf(
-    CarouselCard(R.drawable.woman, "Women"),
+    CarouselCard(R.drawable.depositphotos_187646742_stock_photo_women_style_beautiful_woman_in, "Women"),
     CarouselCard(R.drawable.man, "Men"),
     CarouselCard(R.drawable.kids, "Kids"),
     CarouselCard(R.drawable.ya, "Young Adult"),
@@ -160,7 +155,7 @@ val CarouselSlides: List<CarouselCard> = listOf(
 )
 
 @Composable
-fun Body() {
+fun Carousel() {
     Column() {
         Spacer(modifier = Modifier.heightIn(150.dp))
 
@@ -181,13 +176,55 @@ fun Body() {
                                         .height(card.size))
                             }
                             Row(horizontalArrangement = Arrangement.Center) {
-                                Text(text = card.label, textAlign = TextAlign.Center)
+                                Text(text = card.label, textAlign = TextAlign.Center, fontSize = 18.sp)
                             }
                         }
                     }
                     
                 }
 
+            }
+        }
+    }
+}
+
+val content: List<Int> = listOf(
+    R.drawable.ad1,
+    R.drawable.ad2,
+    R.drawable.ad3
+)
+
+@Composable
+fun Body() {
+    LazyColumn {
+        item{Carousel()}
+
+        item{
+            Spacer(modifier = Modifier.height(30.dp))
+            Image(painter = painterResource(id = R.drawable.nordstrom_holiday_2021_campaign), 
+                contentDescription = "" )
+        }
+
+        item{
+            Spacer(modifier = Modifier.height(30.dp))
+            Column(Modifier.padding(5.dp)) {
+                Text(text = "Just What They Wanted,\n Just in Time", fontWeight = FontWeight.Bold)
+                OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier
+                    .width(500.dp)) {
+                    Text(text = "Last Minute Gifts")
+                }
+                OutlinedButton(onClick = { /*TODO*/ }, modifier = Modifier
+                    .width(500.dp)) {
+                    Text(text = "Gift Cards")
+                }
+            }
+
+        }
+
+        content.forEach { ad ->
+            item{
+                Spacer(modifier = Modifier.height(50.dp))
+                Image(painter = painterResource(id = ad), contentDescription = "ad")
             }
         }
     }
